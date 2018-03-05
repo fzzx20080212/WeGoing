@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public class Circle {
-    public float m_Radius = 1; // 圆环的半径
+    public float m_Radius; // 圆环的半径
     public Vector3 center
     {
         get { return myCircle.position; }
@@ -12,6 +12,8 @@ public class Circle {
     Transform myCircle;
     //为实例池做准备
     public bool isUse;
+
+
     public Circle(Transform circle)
     {
         isUse = false;

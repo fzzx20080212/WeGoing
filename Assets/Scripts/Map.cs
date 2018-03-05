@@ -10,7 +10,9 @@ public class Map:MonoBehaviour {
     int maxNum = 10;
 
     float moveSpeed=4;
-    GameObject circleSprite;
+    //prefabs
+    GameObject circleSprite,playerSprite;
+
 
     //生成的角度范围
     float angleRange = Mathf.PI/6;
@@ -21,15 +23,34 @@ public class Map:MonoBehaviour {
 
     //当前最后一次生成的圆
     Circle curCircle;
+
+    //玩家
+    Player player;
+    
     void Start()
     {
         circleList = new List<Circle>();
         circleSprite = Resources.Load("circle") as GameObject;
+        playerSprite = Resources.Load("player") as GameObject;
+        player = new Player(Instantiate(playerSprite).transform);
         Init();
-
+        player.SetCircle(circleList.First());
     }
 
- 
+    void FixedUpdate()
+    {
+        player.Update();
+        //Move();
+        //CreateCircle();
+    }
+
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            player.ChangePath();
+    }
+
     //初始化对象池
     void Init()
     {
@@ -46,19 +67,14 @@ public class Map:MonoBehaviour {
             CreateCircle();
     }
 
-    void FixedUpdate()
-    {
-        Move();
-        CreateCircle();
-    }
-
+    
     
     void CreateCircle()
     {
         Circle circle= getEmptyCircle();
         if (circle == null)
             return ;
-        //生成的圆与上一个圆的角度
+        //生成的圆与上一个圆的角度(圆心连线与y轴的夹角)
         float angle =Random.Range(-angleRange, angleRange);
         float radius = Random.Range(minRadius,maxRadius);
         circle.Init(new Vector3(curCircle.center.x +(radius + curCircle.m_Radius)* Mathf.Sin(angle), curCircle.center.y+(radius + curCircle.m_Radius) * Mathf.Cos(angle), 0), radius);
