@@ -12,8 +12,30 @@ public class Circle {
     Transform myCircle;
     //为实例池做准备
     public bool isUse;
+    //上一个圈和下一个圈（用于切换圈）
+    Circle upCircle, downCircle;
+    //上交点和下交点
+    public Vector3 upNode, downNode;
+    public float downAngle;
+    //碰撞半径
+    float colRadius=2;
+    public Circle UpCircle
+    {
+        set
+        {
+            upCircle = value;
+            upNode = (value.center - center).normalized * m_Radius;
+        }
+    }
 
-
+    public Circle DownCircle
+    {
+        set
+        {
+            downCircle = value;
+            downNode = (value.center - center).normalized * m_Radius;
+        }
+    }
     public Circle(Transform circle)
     {
         isUse = false;
@@ -39,5 +61,21 @@ public class Circle {
 
     }
   
+    /// <summary>
+    /// 检测是否和上下碰撞盒碰撞
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public Circle HasCollided(Player player)
+    {
+        Vector3 pos = player.player.position;
+     
+        if ((pos-upNode-center).magnitude<colRadius)
+            return upCircle;
+        if ((pos - downNode - center).magnitude < colRadius)
+            return downCircle;
+        return null;
+    }
+    
 
 }

@@ -9,10 +9,10 @@ public class Map:MonoBehaviour {
     //对象池最大数量
     int maxNum = 10;
 
-    float moveSpeed=4;
+    float moveSpeed=2;
     //prefabs
     GameObject circleSprite,playerSprite;
-
+    bool hasStart = false;
 
     //生成的角度范围
     float angleRange = Mathf.PI/6;
@@ -40,15 +40,15 @@ public class Map:MonoBehaviour {
     void FixedUpdate()
     {
         player.Update();
-        //Move();
-        //CreateCircle();
+        Move();
+        CreateCircle();
     }
 
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            player.ChangePath();
+            OnClick();
     }
 
     //初始化对象池
@@ -78,6 +78,10 @@ public class Map:MonoBehaviour {
         float angle =Random.Range(-angleRange, angleRange);
         float radius = Random.Range(minRadius,maxRadius);
         circle.Init(new Vector3(curCircle.center.x +(radius + curCircle.m_Radius)* Mathf.Sin(angle), curCircle.center.y+(radius + curCircle.m_Radius) * Mathf.Cos(angle), 0), radius);
+
+        circle.downAngle = 1.5f * Mathf.PI - angle;
+        curCircle.UpCircle = circle;
+        circle.DownCircle = curCircle;
         curCircle = circle;
     }
 
@@ -94,6 +98,8 @@ public class Map:MonoBehaviour {
 
     public void Move()
     {
+        if (!hasStart)
+            return;
         float moveDistance = moveSpeed * Time.fixedDeltaTime;
         Vector3 distance = new Vector3(0, -moveDistance, 0);
         foreach(Circle c in circleList)
@@ -105,5 +111,11 @@ public class Map:MonoBehaviour {
     }
 
 
-	
+    public void OnClick()
+    {
+        bool change=player.OnClick();
+        if (change && !hasStart)
+            hasStart = true;
+    }
+
 }
