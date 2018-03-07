@@ -13,7 +13,7 @@ public class Player  {
     //旋转速度
     float rotateSpeed;
     //每秒中走得距离
-    float rotateDis=4;
+    float rotateDis=6;
     float curAngle;
     //旋转方向
     enum Direction
@@ -64,8 +64,8 @@ public class Player  {
 
     public bool OnClick()
     {
-        Circle circle = myCircle.HasCollided(this);
-        if (circle == null)
+        int num = myCircle.HasCollided(this);
+        if (num == 0)
         {
             ChangePath();
             return false;
@@ -73,10 +73,20 @@ public class Player  {
         if (pathway == Pathway.inPath)
         {
             direction = direction == Direction.ni ? Direction.shun : Direction.ni;
-            SetCircle(circle);
-            float temp = curAngle;
-            curAngle = myCircle.downAngle;
-            player.Rotate(0,0,(curAngle -temp-Mathf.PI) * 180 / Mathf.PI);
+            if (num == 1)
+            {
+                SetCircle(myCircle.UpCircle);
+                float temp = curAngle;
+                curAngle = myCircle.downAngle;
+                player.Rotate(0, 0, (curAngle - temp - Mathf.PI) * 180 / Mathf.PI);
+            }
+            else
+            {
+                SetCircle(myCircle.DownCircle);
+                float temp = curAngle;
+                curAngle = myCircle.upAngle;
+                player.Rotate(0, 0, (curAngle - temp - Mathf.PI) * 180 / Mathf.PI);
+            }
             return true;
         }
             
