@@ -1,0 +1,11 @@
+﻿{"name":"水星","radius":3.0,"rolling":true,"prefabName":"Planet_0"}
+{"name":"卫星","radius":2.0,"rolling":false,"prefabName":"Planet_1"}
+{"name":"金星","radius":4.0,"rolling":false,"prefabName":"Planet_2"}
+{"name":"地球","radius":3.0,"rolling":false,"prefabName":"Planet_3"}
+{"name":"火星","radius":2.7,"rolling":false,"prefabName":"Planet_4"}
+{"name":"谷神星","radius":2.5,"rolling":false,"prefabName":"Planet_5"}
+{"name":"木星","radius":4.0,"rolling":false,"prefabName":"Planet_6"}
+{"name":"土星","radius":3.2,"rolling":false,"prefabName":"Planet_7"}
+{"name":"天王星","radius":3.0,"rolling":false,"prefabName":"Planet_8"}
+{"name":"海王星","radius":3.0,"rolling":false,"prefabName":"Planet_3"}
+{"name":"冥王星","radius":2.0,"rolling":false,"prefabName":"Planet_2"}
